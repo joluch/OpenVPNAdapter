@@ -28,6 +28,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "9.0"
   s.osx.deployment_target = "10.11"
+  s.tvos.deployment_target = "17.0"
 
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -39,6 +40,7 @@ Pod::Spec.new do |s|
 
   s.ios.frameworks = "Foundation", "NetworkExtension", "SystemConfiguration", "UIKit"
   s.osx.frameworks = "Foundation", "NetworkExtension", "SystemConfiguration"
+  s.tvos.frameworks = "Foundation", "NetworkExtension", "SystemConfiguration", "UIKit"
 
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

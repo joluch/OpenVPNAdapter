@@ -137,13 +137,20 @@ static void SocketCallback(CFSocketRef socket, CFSocketCallBackType type, CFData
 - (void)startReading {
     NSAssert(self.packetFlow != nil, @"packetFlow property shouldn't be nil, set it before start reading packets.");
     
+    for (int i = 0; i < 3; i++) { // Start 3 concurrent reads
+        [self readOnce];
+    }   
+}
+
+- (void)readOnce {
     __weak typeof(self) weakSelf = self;
-    
     [self.packetFlow readPacketsWithCompletionHandler:^(NSArray<NSData *> *packets, NSArray<NSNumber *> *protocols) {
         __strong typeof(self) self = weakSelf;
         
         [self writePackets:packets protocols:protocols toSocket:self.packetFlowSocket];
-        [self startReading];
+
+        // Immediately issue another read
+        [self readOnce];
     }];
 }
 

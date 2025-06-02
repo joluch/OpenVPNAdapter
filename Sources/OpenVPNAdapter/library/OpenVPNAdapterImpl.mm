@@ -109,7 +109,10 @@
     
     self.packetFlowBridge.packetFlow = packetFlow;
     
-    dispatch_queue_t connectQueue = dispatch_queue_create("me.ss-abramchuk.openvpn-adapter.connection.", DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t connectQueue = dispatch_queue_create("me.ss-abramchuk.openvpn-adapter.connection.", DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL);
+    // dispatch_set_qos_class(connectQueue, QOS_CLASS_USER_INITIATED, 0);
+    dispatch_set_target_queue(connectQueue, dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0));
+
     
     dispatch_async(connectQueue, ^{
         ClientAPI::Status status = self.vpnClient->connect();
